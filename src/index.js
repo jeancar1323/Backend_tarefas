@@ -1,12 +1,12 @@
 const express = require('express')
 const server = express()
-server.use(express.json)
+server.use(express.json())
+const TaskRoutes = require('./routes/TaskRouts')
 
-
-server.get('/teste', (req,res) =>{
+server.get('/', (req,res) =>{
   res.send('Hello Word')
 })
 
-server.listen(3000, _=>{
-  console.log('entrou carai')
-})
+server.use('/', TaskRoutes)
+
+server.listen(3000)

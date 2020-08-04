@@ -3,7 +3,7 @@ const mongoose = require('../config/database')
 const Schema = mongoose.Schema
 
 const TaskSchema = new Schema({
-  macandress: {type: String, required: true},
+  macanddress: {type: String, required: true},
   type: {type: Number, required: true},
   title: {type: String, required: true},
   description: {type: String, required: true},
