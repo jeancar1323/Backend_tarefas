@@ -1,6 +1,5 @@
 const TaskModel = require('../model/TaskModel')
 const { isPast } = require('date-fns');
-const { exists } = require('../model/TaskModel');
 
 module.exports = TaskValidation = async (req, res, next) => {
 
@@ -20,10 +19,19 @@ module.exports = TaskValidation = async (req, res, next) => {
     return res.status(400).json({ error: "data não pode estar no passado" })
   else {
 
-    exist = await TaskModel.findOne({
-      'when': { '$eq': new Date(when) },
-      'macanddress': { '$in': macanddress }
-    })
+    if (req.params.id) {
+      exist = await TaskModel.findOne({
+        '_id': { '$ne': req.params.id },
+        'when': { '$eq': new Date(when) },
+        'macanddress': { '$in': macanddress }
+      })
+    }
+    else {
+      exist = await TaskModel.findOne({
+        'when': { '$eq': new Date(when) },
+        'macanddress': { '$in': macanddress }
+      })
+    }
 
     if (exist) {
       return res.status(400).json({ error: "Já existe uma tarefa nesse dia e horario" })
